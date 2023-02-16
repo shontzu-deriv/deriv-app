@@ -7,18 +7,12 @@ import { BinaryLink } from 'App/Components/Routes';
 
 import 'Sass/app/_common/components/platform-dropdown.scss';
 
-const PlatformBox = ({ platform: { icon, title, description } }) => (
+const PlatformBox = ({ platform: { icon, description } }) => (
     <React.Fragment>
         <div className='platform-dropdown__list-platform-background' />
 
-        <div className='platform-dropdown__list-platform-details' title={title}>
-            <Icon
-                data_testid='dt_platform_box_icon'
-                className='platform-dropdown__list-platform-icon'
-                icon={icon}
-                width='50%'
-                height={32}
-            />
+        <div className='platform-switcher__dropdown'>
+            <Icon icon={icon} height={42} width={150} />
             <p className='platform-dropdown__list-platform-description'>{description()}</p>
         </div>
     </React.Fragment>
