@@ -10,10 +10,9 @@ import platform_config from 'App/Constants/platform-config';
 import ToggleMenuDrawer from 'App/Components/Layout/Header/toggle-menu-drawer.jsx';
 import { connect } from 'Stores/connect';
 import { BinaryLink } from 'App/Components/Routes';
-import DerivBrandLogo from 'Assets/SvgComponents/header/deriv-rebranding-logo.svg';
-import DerivBrandLogoDark from 'Assets/SvgComponents/header/deriv-rebranding-logo-dark.svg';
 import RealAccountSignup from 'App/Containers/RealAccountSignup';
 import CurrencySelectionModal from '../../CurrencySelectionModal';
+import DerivBrandLogo from 'Assets/SvgComponents/header/ic-deriv-rebranding-logo.svg';
 
 const Divider = () => {
     return <div className='trading-hub-header__divider' />;
@@ -149,7 +148,6 @@ const TradingHubHeader = ({
             return true;
         });
     const history = useHistory();
-
     return (
         <header className='trading-hub-header'>
             <div className='trading-hub-header__menu-left'>
@@ -158,11 +156,13 @@ const TradingHubHeader = ({
 
                     {header_extension && is_logged_in && <div>{header_extension}</div>}
                 </MobileWrapper>
-                {is_dark_mode ? (
-                    <DerivBrandLogoDark className='trading-hub-header__logo' />
-                ) : (
+                <div className='platform-switcher'>
                     <DerivBrandLogo className='trading-hub-header__logo' />
-                )}
+                    <Text as='h1' styles={{ lineHeight: '2.4rem' }} weight='bold'>
+                        derivTrader
+                    </Text>
+                </div>
+
                 <DesktopWrapper>
                     <Divider />
                     <TradersHubHomeButton is_dark_mode={is_dark_mode} />
@@ -286,6 +286,8 @@ TradingHubHeader.propTypes = {
     content_flag: PropTypes.string,
     switchToCRAccount: PropTypes.func,
     setPreferredLanguage: PropTypes.func,
+    // DerivBrandLogo:PropTypes.any,
+    // DerivBrandLogoDark:PropTypes.any,
 };
 
 export default connect(({ client, modules, notifications, ui, menu, traders_hub }) => ({

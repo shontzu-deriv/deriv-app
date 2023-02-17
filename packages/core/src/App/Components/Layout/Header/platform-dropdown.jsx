@@ -12,7 +12,7 @@ const PlatformBox = ({ platform: { icon, title, description } }) => (
         <div className='platform-dropdown__list-platform-background' />
 
         <div className='platform-switcher__dropdown'>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className='platform-switcher__dropdown-icon'>
                 <Icon data_testid='dt_platform_box_icon' icon={icon} size={42} />
                 <p className='platform-dropdown__list-platform-title'>
                     {title().split(' ')[0].toLowerCase()}
