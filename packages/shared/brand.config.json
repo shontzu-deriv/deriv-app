@@ -12,11 +12,11 @@
     },
     "platforms": {
         "trader": {
-            "name": "DTrader",
+            "name": "Deriv Trader",
             "icon": "IcBrandDtrader"
         },
         "dbot": {
-            "name": "DBot",
+            "name": "Deriv Bot",
             "icon": "IcBrandDbot"
         },
         "mt5": {
@@ -32,7 +32,7 @@
             "icon": "IcDerivez"
         },
         "smarttrader": {
-            "name": "SmartTrader",
+            "name": "Smart Trader",
             "icon": "IcBrandSmarttrader"
         },
         "bbot": {

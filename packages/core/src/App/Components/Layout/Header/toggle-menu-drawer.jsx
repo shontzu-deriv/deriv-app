@@ -452,6 +452,7 @@ const ToggleMenuDrawer = observer(({ platform_config }) => {
                                             is_logging_in={is_logging_in}
                                             platform_config={platform_config}
                                             toggleDrawer={toggleDrawer}
+                                            is_dark_mode={is_dark_mode}
                                         />
                                     </MobileDrawer.SubHeader>
                                 )}
