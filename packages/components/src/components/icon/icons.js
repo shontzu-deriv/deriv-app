@@ -664,6 +664,8 @@ import './rebranding/ic-rebranding-binary-bot.svg';
 import './rebranding/ic-rebranding-binarybot-dashboard.svg';
 import './rebranding/ic-rebranding-dbot-dashboard.svg';
 import './rebranding/ic-rebranding-deriv-bot.svg';
+import './rebranding/ic-rebranding-deriv-ctrader-dashboard.svg';
+import './rebranding/ic-rebranding-deriv-ctrader.svg';
 import './rebranding/ic-rebranding-deriv-trader.svg';
 import './rebranding/ic-rebranding-derivgo-dashboard.svg';
 import './rebranding/ic-rebranding-derivx-dashboard.svg';
