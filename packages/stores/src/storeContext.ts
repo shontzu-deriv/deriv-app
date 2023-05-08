@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import type { TStores } from '../types';
+import type { TRootStore } from '../types';
 
-const StoreContext = createContext<TStores | null>(null);
+const StoreContext = createContext<TRootStore | null>(null);
 
 export default StoreContext;
