@@ -1,7 +1,7 @@
 import merge from 'lodash.merge';
-import type { TRootStore } from '../types';
+import type { TCoreStores } from '../types';
 
-const mock = (): TRootStore => {
+const mock = (): TCoreStores => {
     return {
         client: {
             accounts: {
@@ -282,6 +282,6 @@ const mock = (): TRootStore => {
     };
 };
 
-const mockStore = (override: DeepPartial<TRootStore>): TRootStore => merge(mock(), override);
+const mockStore = (override: DeepPartial<TCoreStores>): TCoreStores => merge(mock(), override);
 
 export { mockStore };

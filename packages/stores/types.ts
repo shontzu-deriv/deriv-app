@@ -269,7 +269,7 @@ type TTradersHubStore = {
     is_high_risk_cr_eu_real: boolean;
 };
 
-export type TRootStore = {
+export type TCoreStores = {
     client: TClientStore;
     common: TCommonStore;
     menu: TMenuStore;

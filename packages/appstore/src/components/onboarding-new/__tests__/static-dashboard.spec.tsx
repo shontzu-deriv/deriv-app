@@ -28,7 +28,7 @@ describe('<StaticDashboard />', () => {
         get: false,
     };
 
-    test('should render derivez in page if !CFDs_restricted_countries (non-eu countries)', async () => {
+    test('should render derivez in page if !CFDs_restricted_countries (non-eu countries)', () => {
         const mock = mockStore({});
 
         render(
@@ -39,7 +39,7 @@ describe('<StaticDashboard />', () => {
         expect(screen.queryByText('Deriv EZ')).toBeInTheDocument();
     });
 
-    test('should not render derivez if CFDs_restricted_countries: true (eu countries)', async () => {
+    test('should not render derivez if CFDs_restricted_countries: true (eu countries)', () => {
         const mock = mockStore({
             traders_hub: {
                 CFDs_restricted_countries: true,
