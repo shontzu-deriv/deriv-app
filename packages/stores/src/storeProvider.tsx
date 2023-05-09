@@ -2,10 +2,10 @@ import React, { PropsWithChildren, useEffect, useMemo } from 'react';
 import StoreContext from './storeContext';
 import { ExchangeRatesStore } from './stores';
 import { ExchangeRatesProvider } from './providers';
-import type { TCoreStores, TStores } from '../types';
+import type { TCoreStores } from '../types';
 
 const StoreProvider = ({ children, store }: PropsWithChildren<{ store: TCoreStores }>) => {
-    const memoizedValue: TStores = useMemo(
+    const memoizedValue: TCoreStores = useMemo(
         () => ({
             ...store,
             exchange_rates: new ExchangeRatesStore(),

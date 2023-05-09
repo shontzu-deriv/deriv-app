@@ -1,6 +1,6 @@
 import type { Authorize, DetailsOfEachMT5Loginid, GetAccountStatus, GetLimits, LogOutResponse } from '@deriv/api-types';
+
 import type { RouteComponentProps } from 'react-router';
-import { ExchangeRatesStore } from './src/stores';
 
 type TAccount = NonNullable<Authorize['account_list']>[0];
 
@@ -15,12 +15,7 @@ type TAccountsList = {
         is_mt?: boolean;
         market_type?: string;
         nativepicker_text?: string;
-        platform_icon?: {
-            Derived: React.SVGAttributes<SVGElement>;
-            Financial: React.SVGAttributes<SVGElement>;
-            Options: React.SVGAttributes<SVGElement>;
-            CFDs: React.SVGAttributes<SVGAElement>;
-        };
+        platform_icon?: string;
         text?: JSX.Element | string;
         value?: string;
     };
@@ -87,8 +82,6 @@ type TNotification =
     | ((withdrawal_locked: boolean, deposit_locked: boolean) => TNotificationMessage)
     | ((excluded_until: number) => TNotificationMessage);
 
-type TAccountStatus = Omit<GetAccountStatus, 'status'> & Partial<Pick<GetAccountStatus, 'status'>>;
-
 type TClientStore = {
     accounts: { [k: string]: TAccount };
     active_accounts: TActiveAccount[];
@@ -102,7 +95,7 @@ type TClientStore = {
         };
     };
     account_list: TAccountsList;
-    account_status: TAccountStatus;
+    account_status: GetAccountStatus;
     available_crypto_currencies: string[];
     balance?: string | number;
     can_change_fiat_currency: boolean;
@@ -120,15 +113,13 @@ type TClientStore = {
     is_deposit_lock: boolean;
     is_dxtrade_allowed: boolean;
     is_eu: boolean;
-    is_authorize: boolean;
+    is_eu_country: boolean;
     is_financial_account: boolean;
     is_financial_information_incomplete: boolean;
     is_identity_verification_needed: boolean;
     is_landing_company_loaded: boolean;
     is_logged_in: boolean;
     is_logging_in: boolean;
-    is_low_risk: boolean;
-    is_pending_proof_of_ownership: boolean;
     is_switching: boolean;
     is_tnc_needed: boolean;
     is_trading_experience_incomplete: boolean;
@@ -183,27 +174,20 @@ type TClientStore = {
     mt5_login_list: DetailsOfEachMT5Loginid[];
     logout: () => Promise<LogOutResponse>;
     should_allow_authentication: boolean;
-    is_crypto: (currency?: string) => boolean;
-    dxtrade_accounts_list: DetailsOfEachMT5Loginid[];
-    default_currency: string;
-    resetVirtualBalance: () => Promise<void>;
-    has_enabled_two_fa: boolean;
-    setTwoFAStatus: (status: boolean) => void;
-    has_changed_two_fa: boolean;
-    setTwoFAChangedStatus: (status: boolean) => void;
+    is_crypto: boolean;
 };
 
 type TCommonStoreError = {
-    app_routing_history: unknown[];
     header: string | JSX.Element;
     message: string | JSX.Element;
+    type?: string;
     redirect_label: string;
     redirect_to: string;
-    redirectOnClick: () => void;
-    setError: (has_error: boolean, error: React.ReactNode | null) => void;
     should_clear_error_on_click: boolean;
     should_show_refresh: boolean;
-    type?: string;
+    redirectOnClick: () => void;
+    setError: (has_error: boolean, error: TCommonStoreError | null) => void;
+    app_routing_history: unknown[];
 };
 
 type TCommonStore = {
@@ -232,7 +216,7 @@ type TUiStore = {
     is_language_settings_modal_on: boolean;
     is_mobile: boolean;
     notification_messages_ui: JSX.Element | null;
-    openRealAccountSignup: (value?: string) => void;
+    openRealAccountSignup: (value: string) => void;
     setCurrentFocus: (value: string) => void;
     setDarkMode: (is_dark_mode_on: boolean) => boolean;
     setIsClosingCreateRealAccountModal: (value: boolean) => void;
@@ -269,45 +253,28 @@ type TNotificationStore = {
 
 type TTradersHubStore = {
     closeModal: () => void;
-    content_flag: 'low_risk_cr_eu' | 'low_risk_cr_non_eu' | 'high_risk_cr' | 'cr_demo' | 'eu_demo' | 'eu_real' | '';
-    combined_cfd_mt5_accounts: DetailsOfEachMT5Loginid &
-        {
-            short_code_and_region: string;
-            login: string;
-            sub_title: string;
-            icon: 'Derived' | 'Financial' | 'Options' | 'CFDs';
-        }[];
-    openModal: (modal_id: string, props?: unknown) => void;
-    selected_account: {
-        login: string;
-        account_id: string;
-    };
+    content_flag: any;
     is_low_risk_cr_eu_real: boolean;
+    openModal: (modal_id: string, props?: any) => void;
     is_eu_user: boolean;
-    setTogglePlatformType: (platform_type: string) => void;
     is_real: boolean;
-    selectRegion: (region: string) => void;
-    financial_restricted_countries: boolean;
     selected_account_type: string;
-    no_CR_account: boolean;
-    no_MF_account: boolean;
+    selectRegion: (region: string) => void;
+    CFDs_restricted_countries: boolean;
+    financial_restricted_countries: boolean;
+    gaming_restricted_countries: boolean;
+    is_cfd: boolean;
+    is_financial: boolean;
+    is_gaming: boolean;
+    is_high_risk_cr_eu_real: boolean;
 };
 
-/**
- * This is the type that contains all the `core` package stores
- */
 export type TCoreStores = {
     client: TClientStore;
     common: TCommonStore;
     menu: TMenuStore;
     ui: TUiStore;
-    // This should be `any` as this property will be handled in each package.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    modules: any;
+    modules: Record<string, any>;
     notifications: TNotificationStore;
     traders_hub: TTradersHubStore;
-};
-
-export type TStores = TCoreStores & {
-    exchange_rates: ExchangeRatesStore;
 };
