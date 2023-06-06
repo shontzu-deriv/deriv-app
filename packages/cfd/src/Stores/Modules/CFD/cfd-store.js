@@ -599,7 +599,7 @@ export default class CFDStore extends BaseStore {
                 response = await WS.authorized.send({
                     trading_platform_deposit: 1,
                     platform: CFD_PLATFORMS.DERIVEZ,
-                    to_account: this.current_account.account_id,
+                    to_account: this.current_account.login,
                 });
                 break;
             }
