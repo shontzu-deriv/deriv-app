@@ -145,6 +145,15 @@ type TTradingPlatformAvailableAccount = {
     sub_account_type: string;
 };
 
+type TAvailableCFDAccounts = {
+    availability: 'Non-EU' | 'EU' | 'All';
+    description: string;
+    icon: 'Derived' | 'Financial' | 'DerivX' | 'SwapFree';
+    market_type: 'synthetic' | 'financial' | 'all' | 'gaming';
+    name: string;
+    platform: 'mt5' | 'dxtrade';
+};
+
 type TAuthenticationStatus = { document_status: string; identity_status: string };
 
 type TMenuItem = {
@@ -399,7 +408,7 @@ type TCommonStore = {
     current_language: string;
     is_language_changing: boolean;
     is_socket_opened: boolean;
-    setAppstorePlatform: (value: string) => void;
+    setAppstorePlatform: (value?: string) => void;
     app_routing_history: TAppRoutingHistory[];
     getExchangeRate: (from_currency: string, to_currency: string) => Promise<number>;
 };
@@ -520,6 +529,7 @@ type TBalance = {
 };
 
 type TTradersHubStore = {
+    getAccount: () => void;
     closeModal: () => void;
     content_flag: 'low_risk_cr_eu' | 'low_risk_cr_non_eu' | 'high_risk_cr' | 'cr_demo' | 'eu_demo' | 'eu_real' | '';
     combined_cfd_mt5_accounts: DetailsOfEachMT5Loginid &
@@ -563,6 +573,8 @@ type TTradersHubStore = {
     platform_demo_balance: TBalance;
     cfd_real_balance: TBalance;
     selectAccountType: (account_type: string) => void;
+    available_cfd_accounts: TAvailableCFDAccounts[];
+    available_dxtrade_accounts: TAvailableCFDAccounts[];
 };
 
 /**
