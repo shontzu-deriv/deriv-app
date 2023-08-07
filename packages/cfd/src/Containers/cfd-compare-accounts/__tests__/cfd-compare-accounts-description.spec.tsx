@@ -30,18 +30,13 @@ describe('<CFDCompareAccountsDescription />', () => {
         expect(screen.getByText(counterpartyCompanyDescription)).toBeInTheDocument();
         expect(screen.getByText(jurisdictionDescription)).toBeInTheDocument();
     };
+    const wrapper = ({ children }: { children: JSX.Element }) => <StoreProvider store={mock}>{children}</StoreProvider>;
 
     it('should render CFDCompareAccountsDescription component on default props', () => {
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
     });
 
     it('should render content for gaming market type with market type svg', () => {
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         assertContent('Maximum leverage', '0.5 pips', 'Spreads from', 'Counterparty company', 'Jurisdiction');
         expect(screen.getByText('1:1000')).toBeInTheDocument();
@@ -52,9 +47,6 @@ describe('<CFDCompareAccountsDescription />', () => {
     it('should render content for gaming market type with vanuatu shortcode', () => {
         mocked_props.trading_platforms.shortcode = 'vanuatu';
 
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         assertContent('Maximum leverage', '0.5 pips', 'Spreads from', 'Counterparty company', 'Jurisdiction');
         expect(screen.getByText('1:1000')).toBeInTheDocument();
@@ -65,9 +57,6 @@ describe('<CFDCompareAccountsDescription />', () => {
     it('should render content for all market type with svg shortcode', () => {
         mocked_props.trading_platforms.market_type = 'all';
 
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         assertContent('Maximum leverage', '0.5 pips', 'Spreads from', 'Counterparty company', 'Jurisdiction');
         expect(screen.getByText('1:1000')).toBeInTheDocument();
@@ -81,9 +70,6 @@ describe('<CFDCompareAccountsDescription />', () => {
         mocked_props.trading_platforms.market_type = 'financial';
         mocked_props.trading_platforms.shortcode = 'svg';
 
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         assertContent('Maximum leverage', '0.5 pips', 'Spreads from', 'Counterparty company', 'Jurisdiction');
         expect(screen.getByText('1:1000')).toBeInTheDocument();
@@ -97,9 +83,6 @@ describe('<CFDCompareAccountsDescription />', () => {
         mocked_props.trading_platforms.market_type = 'financial';
         mocked_props.trading_platforms.shortcode = 'vanuatu';
 
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         assertContent('Maximum leverage', '0.5 pips', 'Spreads from', 'Counterparty company', 'Jurisdiction');
         expect(screen.getByText('1:1000')).toBeInTheDocument();
@@ -113,9 +96,6 @@ describe('<CFDCompareAccountsDescription />', () => {
         mocked_props.trading_platforms.market_type = 'financial';
         mocked_props.trading_platforms.shortcode = 'labuan';
 
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         assertContent('Maximum leverage', '0.5 pips', 'Spreads from', 'Counterparty company', 'Jurisdiction');
         expect(screen.getByText('1:100')).toBeInTheDocument();
@@ -130,9 +110,6 @@ describe('<CFDCompareAccountsDescription />', () => {
         mocked_props.trading_platforms.market_type = 'financial';
         mocked_props.trading_platforms.shortcode = 'maltainvest';
 
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         assertContent('Maximum leverage', '0.5 pips', 'Spreads from', 'Counterparty company', 'Jurisdiction');
         expect(screen.getByText('Up to 1:30')).toBeInTheDocument();
@@ -149,9 +126,6 @@ describe('<CFDCompareAccountsDescription />', () => {
         mocked_props.trading_platforms.shortcode = 'svg';
         mocked_props.is_demo = true;
 
-        const wrapper = ({ children }: { children: JSX.Element }) => (
-            <StoreProvider store={mock}>{children}</StoreProvider>
-        );
         render(<CFDCompareAccountsDescription {...mocked_props} />, { wrapper });
         expect(screen.getByText('1:1000')).toBeInTheDocument();
         expect(screen.getByText('Maximum leverage')).toBeInTheDocument();
