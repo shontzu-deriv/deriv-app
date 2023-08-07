@@ -41,7 +41,7 @@ const getHighlightedIconLabel = (
                         { icon: 'Synthetics', text: localize('Synthetics'), highlighted: true, is_asterisk: true },
                         { icon: 'Forex', text: forex_label, highlighted: true },
                         { icon: 'Stocks', text: localize('Stocks'), highlighted: true },
-                        { icon: 'StockIndices', text: localize('Stock Indices'), highlighted: true },
+                        { icon: 'StockIndices', text: localize('Stock indices'), highlighted: true },
                         { icon: 'Commodities', text: localize('Commodities'), highlighted: true },
                         { icon: 'Cryptocurrencies', text: localize('Cryptocurrencies'), highlighted: true },
                     ];
@@ -51,7 +51,7 @@ const getHighlightedIconLabel = (
                         { icon: 'Baskets', text: localize('Baskets'), highlighted: false },
                         { icon: 'DerivedFX', text: localize('Derived FX'), highlighted: false },
                         { icon: 'Stocks', text: localize('Stocks'), highlighted: false },
-                        { icon: 'StockIndices', text: localize('Stock Indices'), highlighted: false },
+                        { icon: 'StockIndices', text: localize('Stock indices'), highlighted: false },
                         { icon: 'Commodities', text: localize('Commodities'), highlighted: false },
                         { icon: 'Forex', text: forex_label, highlighted: true },
                         { icon: 'Cryptocurrencies', text: localize('Cryptocurrencies'), highlighted: true },
@@ -63,7 +63,7 @@ const getHighlightedIconLabel = (
                         { icon: 'Baskets', text: localize('Baskets'), highlighted: false },
                         { icon: 'DerivedFX', text: localize('Derived FX'), highlighted: false },
                         { icon: 'Stocks', text: localize('Stocks'), highlighted: true },
-                        { icon: 'StockIndices', text: localize('Stock Indices'), highlighted: true },
+                        { icon: 'StockIndices', text: localize('Stock indices'), highlighted: true },
                         { icon: 'Commodities', text: localize('Commodities'), highlighted: true },
                         { icon: 'Forex', text: forex_label, highlighted: true },
                         { icon: 'Cryptocurrencies', text: localize('Cryptocurrencies'), highlighted: true },
@@ -178,7 +178,7 @@ const getHeaderColor = (shortcode: string) => {
 // Config for different Jurisdictions
 const cfd_config = () => ({
     leverage: '1:1000',
-    leverage_description: localize('Maximum Leverage'),
+    leverage_description: localize('Maximum leverage'),
     spread: '0.5 pips',
     spread_description: localize('Spreads from'),
     counterparty_company: 'Deriv (SVG) LLC',
@@ -187,6 +187,7 @@ const cfd_config = () => ({
     jurisdiction_description: localize('Jurisdiction'),
     regulator: localize('Financial Commission'),
     regulator_description: localize('Regulator/External dispute resolution'),
+    regulator_license: '',
 });
 
 // Map the Jurisdictions with the config
@@ -195,6 +196,7 @@ const getJuridisctionDescription = (shortcode: string) => {
         counterparty_company: string,
         jurisdiction: string,
         regulator: string,
+        regulator_license: string | undefined,
         regulator_description: string,
         leverage: string = cfd_config().leverage
     ) => ({
@@ -202,6 +204,7 @@ const getJuridisctionDescription = (shortcode: string) => {
         counterparty_company,
         jurisdiction,
         regulator,
+        regulator_license,
         regulator_description,
         leverage,
     });
@@ -212,13 +215,15 @@ const getJuridisctionDescription = (shortcode: string) => {
                 'Deriv (BVI) Ltd',
                 'British Virgin Islands',
                 localize('British Virgin Islands Financial Services Commission'),
-                localize('(License no. SIBA/L/18/1114)<br />Regulator/External dispute Resolution')
+                localize('(License no. SIBA/L/18/1114)'),
+                localize('Regulator/External dispute Resolution')
             );
         case 'synthetic_vanuatu':
             return createDescription(
                 'Deriv (V) Ltd',
                 'Vanuatu',
                 localize('Vanuatu Financial Services Commission'),
+                '',
                 localize('Regulator/External dispute resolution')
             );
         case 'financial_bvi':
@@ -226,13 +231,15 @@ const getJuridisctionDescription = (shortcode: string) => {
                 'Deriv (BVI) Ltd',
                 'British Virgin Islands',
                 localize('British Virgin Islands Financial Services Commission'),
-                localize('(License no. SIBA/L/18/1114)<br />Regulator/External Dispute Resolution')
+                localize('(License no. SIBA/L/18/1114)'),
+                localize('Regulator/External dispute resolution')
             );
         case 'financial_vanuatu':
             return createDescription(
                 'Deriv (V) Ltd',
                 'Vanuatu',
                 localize('Vanuatu Financial Services Commission'),
+                '',
                 localize('Regulator/External Dispute Resolution')
             );
         case 'financial_labuan':
@@ -240,7 +247,8 @@ const getJuridisctionDescription = (shortcode: string) => {
                 'Deriv (FX) Ltd',
                 'Labuan',
                 localize('Labuan Financial Services Authority'),
-                localize('(licence no. MB/18/0024)<br />Regulator/External Dispute Resolution'),
+                localize('(licence no. MB/18/0024)'),
+                localize('Regulator/External Dispute Resolution'),
                 '1:100'
             );
         case 'financial_maltainvest':
@@ -249,6 +257,7 @@ const getJuridisctionDescription = (shortcode: string) => {
                 'Malta',
                 localize('Financial Commission'),
                 localize('Regulated by the Malta Financial Services Authority (MFSA) (licence no. IS/70156)'),
+                '',
                 '1:30'
             );
         // Dxtrade
