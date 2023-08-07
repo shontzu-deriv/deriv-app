@@ -9,6 +9,7 @@ import {
 // Map the accounts according to the market type
 const getHighlightedIconLabel = (
     trading_platforms: TModifiedTradingPlatformAvailableAccount,
+    selected_region?: string,
     is_demo?: boolean
 ): TInstrumentsIcon[] => {
     const market_type = getMarketType(trading_platforms);
@@ -17,7 +18,8 @@ const getHighlightedIconLabel = (
     const forex_label =
         ['financial_labuan', 'financial_vanuatu'].includes(market_type_shortcode) ||
         is_demo ||
-        trading_platforms.platform === CFD_PLATFORMS.DXTRADE
+        trading_platforms.platform === CFD_PLATFORMS.DXTRADE ||
+        selected_region === 'EU'
             ? localize('Forex')
             : localize('Forex: standard/micro');
 
@@ -41,7 +43,7 @@ const getHighlightedIconLabel = (
                         { icon: 'Synthetics', text: localize('Synthetics'), highlighted: true, is_asterisk: true },
                         { icon: 'Forex', text: forex_label, highlighted: true },
                         { icon: 'Stocks', text: localize('Stocks'), highlighted: true },
-                        { icon: 'StockIndices', text: localize('Stock indices'), highlighted: true },
+                        { icon: 'StockIndices', text: localize('Stock Indices'), highlighted: true },
                         { icon: 'Commodities', text: localize('Commodities'), highlighted: true },
                         { icon: 'Cryptocurrencies', text: localize('Cryptocurrencies'), highlighted: true },
                     ];
@@ -51,7 +53,7 @@ const getHighlightedIconLabel = (
                         { icon: 'Baskets', text: localize('Baskets'), highlighted: false },
                         { icon: 'DerivedFX', text: localize('Derived FX'), highlighted: false },
                         { icon: 'Stocks', text: localize('Stocks'), highlighted: false },
-                        { icon: 'StockIndices', text: localize('Stock indices'), highlighted: false },
+                        { icon: 'StockIndices', text: localize('Stock Indices'), highlighted: false },
                         { icon: 'Commodities', text: localize('Commodities'), highlighted: false },
                         { icon: 'Forex', text: forex_label, highlighted: true },
                         { icon: 'Cryptocurrencies', text: localize('Cryptocurrencies'), highlighted: true },
@@ -63,7 +65,7 @@ const getHighlightedIconLabel = (
                         { icon: 'Baskets', text: localize('Baskets'), highlighted: false },
                         { icon: 'DerivedFX', text: localize('Derived FX'), highlighted: false },
                         { icon: 'Stocks', text: localize('Stocks'), highlighted: true },
-                        { icon: 'StockIndices', text: localize('Stock indices'), highlighted: true },
+                        { icon: 'StockIndices', text: localize('Stock Indices'), highlighted: true },
                         { icon: 'Commodities', text: localize('Commodities'), highlighted: true },
                         { icon: 'Forex', text: forex_label, highlighted: true },
                         { icon: 'Cryptocurrencies', text: localize('Cryptocurrencies'), highlighted: true },
@@ -258,7 +260,7 @@ const getJuridisctionDescription = (shortcode: string) => {
                 localize('Financial Commission'),
                 localize('Regulated by the Malta Financial Services Authority (MFSA) (licence no. IS/70156)'),
                 '',
-                '1:30'
+                'Up to 1:30'
             );
         // Dxtrade
         case 'all_':
