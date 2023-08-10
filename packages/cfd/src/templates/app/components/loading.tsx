@@ -1,9 +1,24 @@
 import classNames from 'classnames';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Text } from '@deriv/components';
 
-const Loading = ({ className, id, is_fullscreen = true, is_slow_loading, status, theme }) => {
+type TLoadingProps = {
+    className?: string;
+    id?: string | undefined;
+    is_fullscreen?: boolean;
+    is_slow_loading?: boolean;
+    status?: string[];
+    theme?: string;
+};
+
+function Loading({
+    className,
+    id,
+    is_fullscreen = true,
+    is_slow_loading,
+    status = [],
+    theme,
+}: TLoadingProps): React.ReactElement {
     const theme_class = theme ? `barspinner-${theme}` : 'barspinner-light';
     return (
         <div
@@ -33,14 +48,6 @@ const Loading = ({ className, id, is_fullscreen = true, is_slow_loading, status,
                 ))}
         </div>
     );
-};
+}
 
-Loading.propTypes = {
-    className: PropTypes.string,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    is_fullscreen: PropTypes.bool,
-    is_slow_loading: PropTypes.bool,
-    status: PropTypes.array,
-    theme: PropTypes.string,
-};
 export default Loading;
