@@ -16,14 +16,13 @@ import {
     TClickableDescription,
     TJurisdictionCardItems,
     TJurisdictionCardItemVerification,
+    TCFDPlatform,
 } from '../Components/props.types';
 import RootStore from '../Stores/index';
 
 export type TCFDPersonalDetailsContainerProps = {
     onSubmit: (index: number, value: { [key: string]: string }) => void;
 };
-
-type CFD_Platform = 'dxtrade' | 'mt5';
 
 export type TCFDChangePasswordConfirmationProps = {
     confirm_label?: string;
@@ -35,7 +34,7 @@ export type TCFDChangePasswordConfirmationProps = {
 };
 
 export type TCFDDashboardContainer = {
-    platform: CFD_Platform;
+    platform: TCFDPlatform;
     active_index: number;
     is_dark_mode_on: boolean;
     dxtrade_tokens: {
@@ -57,7 +56,7 @@ export type TMT5AccountOpeningRealFinancialStpModal = {
 
 export type TMissingRealAccount = {
     onClickSignup: () => void;
-    platform: CFD_Platform;
+    platform: TCFDPlatform;
 };
 
 export type TChangePassword = {
@@ -67,7 +66,7 @@ export type TChangePassword = {
 
 export type TPasswordResetAndTradingPasswordManager = {
     email: string;
-    platform: CFD_Platform;
+    platform: TCFDPlatform;
     account_group: TCFDPasswordReset['account_group'];
     toggleModal?: () => void;
 };
@@ -85,7 +84,7 @@ export type TError = {
 };
 
 export type TCFDResetPasswordModal = {
-    platform: CFD_Platform;
+    platform: TCFDPlatform;
 };
 
 export type TCFDPasswordSuccessMessage = {
@@ -136,14 +135,14 @@ export type TCFDPasswordManagerTabContent = {
     email: string;
     setPasswordType: (value: string) => void;
     multi_step_ref: React.MutableRefObject<TMultiStepRefProps | undefined>;
-    platform: CFD_Platform;
+    platform: TCFDPlatform;
     onChangeActiveTabIndex: (value: number) => void;
     account_group: TCFDPasswordReset['account_group'];
 };
 
 export type TCFDPasswordManagerModal = {
     is_visible: boolean;
-    platform: CFD_Platform;
+    platform: TCFDPlatform;
     selected_login: string;
     toggleModal: () => void;
     selected_account_type: string;
