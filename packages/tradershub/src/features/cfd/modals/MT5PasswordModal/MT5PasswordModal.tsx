@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import {
     useAccountStatus,
     useActiveTradingAccount,
@@ -25,6 +24,7 @@ import {
 } from '../../constants';
 import { CFDSuccess, CreatePassword, EnterPassword } from '../../screens';
 import { Jurisdiction } from '../../screens/CFDCompareAccounts/constants';
+import SuccessButton from './renderSuccessButton';
 
 type TMT5PasswordModalProps = {
     marketType: TMarketTypes.SortedMT5Accounts;
@@ -44,7 +44,6 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
     const { getCFDState } = Provider.useCFDContext();
     const { hide, show } = Provider.useModal();
     const { isMobile } = useBreakpoint();
-    const history = useHistory();
 
     const isMT5PasswordNotSet = accountStatus?.is_mt5_password_not_set;
 
@@ -132,34 +131,8 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
         } account`;
     }, [hasMT5Account, isDemo, isSuccess]);
 
-    const renderSuccessButton = useCallback(() => {
-        if (isDemo) {
-            return (
-                <Button onClick={hide} size='lg'>
-                    OK
-                </Button>
-            );
-        }
-        return (
-            <ButtonGroup className='justify-center w-full'>
-                <Button onClick={hide} size='lg' variant='secondary'>
-                    Maybe later
-                </Button>
-                <Button
-                    onClick={() => {
-                        hide();
-                        history.push('/cashier/transfer');
-                    }}
-                    size='lg'
-                >
-                    Transfer funds
-                </Button>
-            </ButtonGroup>
-        );
-    }, [history, isDemo, hide]);
-
     const renderFooter = useCallback(() => {
-        if (isSuccess) return renderSuccessButton();
+        if (isSuccess) return <SuccessButton hide={hide} isDemo={isDemo} />;
         if (hasMT5Account)
             return (
                 <ButtonGroup className='w-full'>
@@ -208,15 +181,16 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
             </Button>
         );
     }, [
-        createMT5AccountLoading,
-        hasMT5Account,
         isSuccess,
-        onSubmit,
+        hide,
+        isDemo,
+        hasMT5Account,
         password,
-        platform,
-        renderSuccessButton,
-        show,
+        createMT5AccountLoading,
         tradingPlatformPasswordChangeLoading,
+        onSubmit,
+        show,
+        platform,
     ]);
 
     const successComponent = useMemo(() => {
@@ -236,7 +210,7 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
                     landingCompany={selectedJurisdiction}
                     marketType={marketType}
                     platform='mt5'
-                    renderButtons={renderSuccessButton}
+                    renderButtons={() => <SuccessButton hide={hide} isDemo={isDemo} />}
                     title={`Your ${marketTypeTitle} ${isDemo ? Category.DEMO : landingCompanyName} account is ready`}
                 />
             );
@@ -251,7 +225,7 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
         mt5Accounts,
         selectedJurisdiction,
         marketType,
-        renderSuccessButton,
+        hide,
     ]);
 
     const passwordComponent = useMemo(() => {
