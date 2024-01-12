@@ -10,6 +10,7 @@ import {
     RegulationSwitcherMobile,
     TotalAssets,
 } from '../../components';
+import { MT5PasswordModal } from '../../features/cfd/modals/MT5PasswordModal';
 
 const TradersHubRoute = () => {
     const { isMobile } = useBreakpoint();
@@ -57,6 +58,7 @@ const TradersHubRoute = () => {
                 <TotalAssets />
             </div>
             <OptionsAndMultipliersSection />
+            <MT5PasswordModal marketType={'all'} platform={'mt5'} />
             <CFDSection />
         </div>
     );
