@@ -24,7 +24,7 @@ export const submitHandler = async (
     }
 
     const categoryAccountType = activeTrading?.is_virtual ? Category.DEMO : accountType;
-
+    // make a helper function for this
     mutate({
         payload: {
             account_type: categoryAccountType,

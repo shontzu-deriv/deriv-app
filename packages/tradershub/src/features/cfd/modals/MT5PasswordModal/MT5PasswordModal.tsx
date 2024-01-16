@@ -22,10 +22,9 @@ import {
     PlatformDetails,
     QueryStatus,
 } from '../../constants';
-import { CreatePassword, EnterPassword } from '../../screens';
+import { CFDSuccess, CreatePassword, EnterPassword } from '../../screens';
 import SuccessButton from './renderSuccessButton';
 import { submitHandler } from './SubmitHandler';
-import SuccessComponent from './SuccessComponent';
 
 type TMT5PasswordModalProps = {
     marketType: TMarketTypes.SortedMT5Accounts;
@@ -155,18 +154,19 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
         submitHandlerProps,
     ]);
 
-    const passwordComponent = useMemo(() => {
-        if (!isSuccess) {
-            return isMT5PasswordNotSet ? (
-                <CreatePassword
-                    icon={<MT5PasswordIcon />}
-                    isLoading={tradingPlatformPasswordChangeLoading || createMT5AccountLoading}
-                    onPasswordChange={e => setPassword(e.target.value)}
-                    onPrimaryClick={() => submitHandler(submitHandlerProps)}
-                    password={password}
-                    platform={PlatformDetails.mt5.platform}
-                />
-            ) : (
+    const renderSuccessDescription = () => {
+        return isDemo
+            ? `Let's practise trading with ${activeTrading?.display_balance} virtual funds.`
+            : `Transfer funds from your ${activeTrading?.currency} Wallet to your ${marketTypeTitle} ${landingCompanyName} account to start trading.`;
+    };
+
+    if (status === QueryStatus.ERROR && error?.error?.code !== 'PasswordError') {
+        return <ActionScreen description={error?.error.message} title={error?.error?.code} />;
+    }
+
+    function renderContent() {
+        if (!isMT5PasswordNotSet) {
+            return (
                 <EnterPassword
                     isLoading={tradingPlatformPasswordChangeLoading || createMT5AccountLoading}
                     marketType={marketType}
@@ -178,42 +178,38 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
                     platform={PlatformDetails.mt5.platform}
                 />
             );
+        } else if (isMT5PasswordNotSet) {
+            return (
+                <CreatePassword
+                    icon={<MT5PasswordIcon />}
+                    isLoading={tradingPlatformPasswordChangeLoading || createMT5AccountLoading}
+                    onPasswordChange={e => setPassword(e.target.value)}
+                    onPrimaryClick={() => submitHandler(submitHandlerProps)}
+                    password={password}
+                    platform={PlatformDetails.mt5.platform}
+                />
+            );
         }
-    }, [
-        isSuccess,
-        isMT5PasswordNotSet,
-        tradingPlatformPasswordChangeLoading,
-        createMT5AccountLoading,
-        password,
-        marketType,
-        error?.error?.code,
-        submitHandlerProps,
-        show,
-        platform,
-    ]);
-
-    if (status === QueryStatus.ERROR && error?.error?.code !== 'PasswordError') {
-        return <ActionScreen description={error?.error.message} title={error?.error?.code} />;
+        return (
+            <CFDSuccess
+                description={renderSuccessDescription()}
+                displayBalance={
+                    mt5Accounts?.find(account => account.market_type === marketType)?.display_balance || '0.00'
+                }
+                landingCompany={selectedJurisdiction}
+                marketType={marketType}
+                platform='mt5'
+                renderButtons={() => <SuccessButton hide={hide} isDemo={isDemo} />}
+                title={`Your ${marketTypeTitle} ${isDemo ? ' demo' : landingCompanyName} account is ready`}
+            />
+        );
     }
 
     if (isMobile) {
         return (
             <Modal>
                 <Modal.Header title={renderTitle()} />
-                <Modal.Content>
-                    <SuccessComponent
-                        activeTrading={activeTrading}
-                        hide={hide}
-                        isDemo={isDemo}
-                        isSuccess={isSuccess}
-                        landingCompanyName={landingCompanyName}
-                        marketType={marketType}
-                        marketTypeTitle={marketTypeTitle}
-                        mt5Accounts={mt5Accounts}
-                        selectedJurisdiction={selectedJurisdiction}
-                    />
-                    {passwordComponent}
-                </Modal.Content>
+                <Modal.Content>{renderContent()}</Modal.Content>
                 <Modal.Footer>{renderFooter()}</Modal.Footer>
             </Modal>
         );
@@ -222,20 +218,7 @@ const MT5PasswordModal = ({ marketType, platform }: TMT5PasswordModalProps) => {
     return (
         <Dialog>
             <Dialog.Header />
-            <Dialog.Content>
-                <SuccessComponent
-                    activeTrading={activeTrading}
-                    hide={hide}
-                    isDemo={isDemo}
-                    isSuccess={isSuccess}
-                    landingCompanyName={landingCompanyName}
-                    marketType={marketType}
-                    marketTypeTitle={marketTypeTitle}
-                    mt5Accounts={mt5Accounts}
-                    selectedJurisdiction={selectedJurisdiction}
-                />
-                {passwordComponent}
-            </Dialog.Content>
+            <Dialog.Content>{renderContent()}</Dialog.Content>
         </Dialog>
     );
 };
