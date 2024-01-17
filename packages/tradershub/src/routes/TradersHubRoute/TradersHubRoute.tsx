@@ -9,6 +9,7 @@ import {
     RegulationSwitcherDesktop,
     RegulationSwitcherMobile,
     TotalAssets,
+    TradersHubContent,
 } from '../../components';
 import { MT5PasswordModal } from '../../features/cfd/modals/MT5PasswordModal';
 
@@ -48,7 +49,7 @@ const TradersHubRoute = () => {
         );
 
     return (
-        <div className='flex flex-col gap-1200'>
+        <div className='space-y-1200'>
             <div className='flex items-center justify-between align-start gap-100'>
                 <div className='flex items-center gap-600'>
                     <Heading.H3 className='font-sans'>Trader&apos;s Hub</Heading.H3>
@@ -57,9 +58,8 @@ const TradersHubRoute = () => {
                 {isSwitcherVisible && <RegulationSwitcherDesktop />}
                 <TotalAssets />
             </div>
-            <OptionsAndMultipliersSection />
             <MT5PasswordModal marketType={'all'} platform={'mt5'} />
-            <CFDSection />
+            <TradersHubContent />
         </div>
     );
 };
