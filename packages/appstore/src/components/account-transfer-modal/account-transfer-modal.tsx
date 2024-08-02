@@ -41,6 +41,7 @@ const AccountTransferModal = observer(({ is_modal_open, toggleModal }: TAccountT
 
     const modal_title = !is_transfer_confirm && <Localize i18n_default_text={'Transfer funds to your accounts'} />;
 
+    // todo: check this
     const onClickDeposit = () => {
         toggleModal();
         history.push(routes.cashier_deposit);
@@ -49,6 +50,11 @@ const AccountTransferModal = observer(({ is_modal_open, toggleModal }: TAccountT
     const onClickNotes = () => {
         toggleModal();
         history.push(routes.cashier_acc_transfer);
+    };
+
+    const onClose = () => {
+        toggleModal();
+        history.push(routes.financial_assessment); // todo: this redirects
     };
 
     return (
@@ -63,7 +69,14 @@ const AccountTransferModal = observer(({ is_modal_open, toggleModal }: TAccountT
             should_header_stick_body={false}
         >
             <Modal.Body>
-                <AccountTransfer onClickDeposit={onClickDeposit} onClickNotes={onClickNotes} onClose={toggleModal} />
+                <AccountTransfer
+                    onClickDeposit={onClickDeposit}
+                    onClickNotes={onClickNotes}
+                    onClose={() => {
+                        onClose;
+                        // console.log('onClose');
+                    }}
+                />
             </Modal.Body>
         </Modal>
     );

@@ -122,7 +122,7 @@ const AccountTransferForm = observer(
             ui,
             client,
             common: { is_from_derivgo },
-            traders_hub: { closeAccountTransferModal },
+            traders_hub: { closeAccountTransferModal, toggleAccountTransferModal },
         } = useStore();
 
         const { is_mobile } = ui;
@@ -420,6 +420,7 @@ const AccountTransferForm = observer(
             has_reached_maximum_daily_transfers = !remaining_transfers;
 
             let hint_text;
+            //todo: check server maintenance hint text
             if (is_migration_status_present) {
                 hint_text = <Localize i18n_default_text='You can no longer open new positions with this account.' />;
             } else {
@@ -502,10 +503,16 @@ const AccountTransferForm = observer(
                         converter_from_amount: converter_from_amount || '',
                         converter_to_amount: converter_to_amount || '',
                     }}
-                    onSubmit={() => {
-                        requestTransferBetweenAccounts({
+                    onSubmit={async () => {
+                        // console.log('requestTransferBetweenAccounts');
+                        await requestTransferBetweenAccounts({
                             amount: account_transfer_amount ? Number(account_transfer_amount) : 0,
                         });
+                        if (error && error.code == 'FinancialAssessmentRequired') {
+                            toggleAccountTransferModal();
+                            // console.log(error.code, error.message);
+                            <ErrorDialog error={error} />;
+                        }
                     }}
                     validateOnBlur={false}
                     enableReinitialize
@@ -779,6 +786,7 @@ const AccountTransferForm = observer(
                                                 />
                                             </SideNote>
                                         )}
+                                        {/* FinancialAssessmentRequired error requires waiting for submit to return the code first*/}
                                         <ErrorDialog error={error} />
                                     </Form>
                                 </>

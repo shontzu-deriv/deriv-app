@@ -65,18 +65,11 @@ const ErrorDialog = observer(({ className, error = {} }: TErrorDialogProps) => {
                     title: localize('Cashier Error'),
                     cancel_button_text: undefined,
                     confirm_button_text: localize('OK'),
-                    onConfirm: undefined,
+                    onConfirm: dismissError,
                     message: (
                         <Localize
                             i18n_default_text='Please complete your <0>financial assessment</0>.'
-                            components={[
-                                <Link
-                                    to={routes.financial_assessment}
-                                    key={0}
-                                    className='link'
-                                    onClick={dismissError}
-                                />,
-                            ]}
+                            components={[<Link to={routes.financial_assessment} key={0} className='link' />]}
                         />
                     ),
                 });

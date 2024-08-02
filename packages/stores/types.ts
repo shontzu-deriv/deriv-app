@@ -1081,6 +1081,7 @@ type TTradersHubStore = {
     no_MF_account: boolean;
     CFDs_restricted_countries: boolean;
     toggleAccountTransferModal: () => void;
+    setAccountTransferModal: (value: boolean) => void;
     is_real_wallets_upgrade_on: boolean;
     toggleWalletsUpgrade: (value: boolean) => void;
     platform_real_balance: TBalance;

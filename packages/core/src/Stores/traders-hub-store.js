@@ -115,6 +115,7 @@ export default class TradersHubStore extends BaseStore {
             show_eu_related_content: computed,
             startTrade: action.bound,
             toggleAccountTransferModal: action.bound,
+            setAccountTransferModal: action.bound,
             closeAccountTransferModal: action.bound,
             setIsOnboardingVisited: action.bound,
             setIsFirstTimeVisit: action.bound,
@@ -800,6 +801,10 @@ export default class TradersHubStore extends BaseStore {
 
     toggleAccountTransferModal() {
         this.is_account_transfer_modal_open = !this.is_account_transfer_modal_open;
+    }
+
+    setAccountTransferModal(is_account_transfer_modal_open) {
+        this.is_account_transfer_modal_open = is_account_transfer_modal_open;
     }
 
     toggleFailedVerificationModalVisibility() {
